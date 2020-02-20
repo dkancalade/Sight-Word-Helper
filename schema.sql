@@ -1,15 +1,17 @@
-DROP DATABASE IF EXISTS test;
+DROP DATABASE IF EXISTS SightWords;
 
-CREATE DATABASE test;
+CREATE DATABASE SightWords;
 
-USE test;
+USE SightWords;
 
-CREATE TABLE items (
+CREATE TABLE words (
   id int NOT NULL AUTO_INCREMENT,
-  quantity integer NOT NULL,
-  description varchar(50) NOT NULL,
+  name varchar(20) NOT NULL UNIQUE,
+  url varchar(50) NOT NULL UNIQUE,
+  set_number integer NOT NULL
   PRIMARY KEY (ID)
 );
+
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql

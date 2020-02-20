@@ -3,7 +3,7 @@ import WordDisplay from './WordDisplay.jsx';
 
 const WordList = (props) => (
   <div>
-    <h4> Sight Word List </h4>
+    <h4> Current List: default </h4>
     There are { props.sightWords.length } words to practice.
     { props.sightWords.map((sightWord, i) => <WordDisplay sightWord={sightWord} handleClick={props.handleClick}key={i.toString()}/>)}
   </div>

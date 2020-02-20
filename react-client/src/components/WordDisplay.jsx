@@ -2,12 +2,12 @@ import React from 'react';
 
 const WordDisplay = (props) => (
   <div
+    className="word"
     onClick = {
       (e) => {
-        props.handleClick(e.target.innerText);
+        props.handleClick(e.target);
         }
       }>
-    {/* {console.log('sightWords', props.sightWord)} */}
     { props.sightWord }
   </div>
 )

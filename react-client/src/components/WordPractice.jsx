@@ -1,5 +1,5 @@
 import React from 'react';
-const SightWordPractice = (props) => (
+const WordPractice = (props) => (
   <div>
     <h2>Learn the Word Below</h2>
     <form id={props.currentWord}>
@@ -12,4 +12,4 @@ const SightWordPractice = (props) => (
 
 
 
-export default SightWordPractice;
+export default WordPractice;
