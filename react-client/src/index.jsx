@@ -1,20 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import HomePage from './components/HomePage.jsx';
 import WordList from './components/WordList.jsx';
 import WordPractice from './components/WordPractice.jsx';
+import CreateWordList from './components/CreateWordList.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       sightWords: ['hi', 'you', 'we', 'get', 'set', 'how', 'who', 'it', 'the', 'and'],
-      sightWordsUrl: [],
+      currentList: null,
+      urls: ['/default/hi', '/default/you', '/default/we', '/default/get', '/default/set', '/default/how', '/default/who', '/default/it', '/default/the', '/default/and'],
+      usedWords: [],
+      incorrectWords: [],
       currentWord: null,
-      correct: null,
-      completed: 0,
-      currentIndex: null
-    }
+      currentUrl: null,
+      correct: 0,
+      completed: 0
+    };
   }
 
   // componentDidMount() {
@@ -30,64 +35,93 @@ class App extends React.Component {
   //     }
   //   });
   // }
-
-  handleClick(tag) {
-    if (tag.id === 'lists') {
-      console.log('clicked lists', tag);
-    }
-    if (tag.id === 'create') {
-      console.log('clicked create', tag);
-    }
-    if (tag.className === 'word') {
-      let word = tag.innerText;
-      console.log('word', word);
-      // if (tag.className === )
-      this.setState(
-        (state)=> (
-          {
-            currentIndex:
-            state.sightWords.findIndex((element) => {
-              return element === word;
-            }),
-
-            currentWord: word
-          }), () => {
-            console.log('newState', this.state);
+  handleSubmit(tag) {
+    const id = tag.target.children[1].id;
+    if (id === 'answer') {
+      const submittedAnswer = tag.target.children[1].value;
+      if (submittedAnswer === this.state.currentWord) {
+        this.setState((state) => {
+          return {
+            correct: state.correct + 1,
+            completed: state.completed + 1
           }
-          );
+        }, () => {
+          console.log('state', this.state);
+        });
+      } else {
+        this.setState((state) => {
+          return {
+            completed: state.completed + 1
+          }
+        }, () => {
+          console.log('state', this.state);
+        });
+      }
     }
   }
 
-  wordSelector() {
-    const currentWord = this.state.currentWord;
-    if (currentWord === null) {
-      return (
-      <div>
-        <h1>Welcome to Sight Words Helper</h1>
-        <table id='menu'>
-          <thead>
-            <tr>
-              <th id='lists' onClick = {(e) => {this.handleClick(e.target)}}>| Sight Word Lists |</th>
-              <th id='create' onClick = {(e) => {this.handleClick(e.target)}}>| Create Custom List |</th>
-            </tr>
-          </thead>
 
-        {/* <WordList
-          sightWords={this.state.sightWords}
-          handleClick = {this.handleClick.bind(this)}/> */}
-          </table>
-      </div>
+  handleClick(tag) {
+    if (tag.id === 'lists') {
+      this.setState({currentList: "default"}, () => {
+      });
+    }
+    if (tag.id === 'create') {
+      this.setState({currentList: "new"}, () => {
+      });
+    }
+    if (tag.className === 'word') {
+      const url = tag.dataset.url;
+      const word = tag.innerText;
+      this.setState(
+
+        {
+            currentWord: word,
+            currentUrl: url
+          }, () => {
+            console.log('newState', this.state);
+          }
       );
+    }
+  }
+
+  pageSelector() {
+    const currentWord = this.state.currentWord;
+    const currentUrl = this.state.currentUrl;
+    const currentList = this.state.currentList;
+    if (currentWord === null && currentList === null) {
+      return (
+        <HomePage handleClick={this.handleClick.bind(this)}/>
+      );
+    } else if (currentWord === null && currentList){
+      if (currentList === 'default') {
+        return (
+          <WordList
+            listName={this.state.currentList}
+            sightWords={this.state.sightWords}
+            urls={this.state.urls}
+            handleClick = {this.handleClick.bind(this)}
+          />
+        );
+      } else if (currentList === 'new') {
+        return (
+          <CreateWordList />
+        );
+      }
+
     } else {
-        return (<WordPractice word={currentWord} />);
-      };
+        return (<WordPractice
+          word={currentWord}
+          url={this.state.currentUrl}
+          handleSubmit={this.handleSubmit.bind(this)}
+        />);
+    }
   }
 
 
 
   render () {
-    let select = this.wordSelector();
-
+    let select = this.pageSelector();
     return (
       <div>
         {select}

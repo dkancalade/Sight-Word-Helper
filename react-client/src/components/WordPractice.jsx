@@ -1,10 +1,15 @@
 import React from 'react';
-const WordPractice = (props) => (
+const WordPractice = ({word, url, handleSubmit}) => (
   <div>
     <h2>Learn the Word Below</h2>
-    <form id={props.currentWord}>
-      <label htmlFor={props.currentWord}></label>
-      <input type="text" name={props.currentWord}></input>
+    <audio controls>
+      <source src={url} type="audio/mpeg"/>
+    </audio>
+
+    <form id={word} onSubmit={(e) => {e.preventDefault(), handleSubmit(e)}}>
+      <label htmlFor={word}>Spell Word to the right:</label>
+      <input id="answer" type="text" name={word}></input>
+      <input id="spellcheck" type="submit" value="Submit" />
     </form>
   </div>
 );

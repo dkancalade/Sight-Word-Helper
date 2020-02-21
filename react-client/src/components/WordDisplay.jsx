@@ -1,14 +1,17 @@
 import React from 'react';
 
-const WordDisplay = (props) => (
+
+const WordDisplay = ({sightWord, url, handleClick}) => (
   <div
-    className="word"
-    onClick = {
-      (e) => {
-        props.handleClick(e.target);
-        }
-      }>
-    { props.sightWord }
+  className = "word"
+  data-url = {url}
+  onClick = {
+    (e) => {
+      handleClick(e.target);
+    }
+  }
+  >
+      {sightWord}
   </div>
 )
 
