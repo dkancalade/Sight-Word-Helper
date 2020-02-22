@@ -17,6 +17,7 @@ class App extends React.Component {
       incorrectWords: [],
       currentWord: null,
       currentUrl: null,
+      correctInput: null,
       correct: 0,
       completed: 0
     };
@@ -35,30 +36,6 @@ class App extends React.Component {
   //     }
   //   });
   // }
-  handleSubmit(tag) {
-    const id = tag.target.children[1].id;
-    if (id === 'answer') {
-      const submittedAnswer = tag.target.children[1].value;
-      if (submittedAnswer === this.state.currentWord) {
-        this.setState((state) => {
-          return {
-            correct: state.correct + 1,
-            completed: state.completed + 1
-          }
-        }, () => {
-          console.log('state', this.state);
-        });
-      } else {
-        this.setState((state) => {
-          return {
-            completed: state.completed + 1
-          }
-        }, () => {
-          console.log('state', this.state);
-        });
-      }
-    }
-  }
 
 
   handleClick(tag) {
@@ -74,51 +51,123 @@ class App extends React.Component {
       const url = tag.dataset.url;
       const word = tag.innerText;
       this.setState(
-
         {
-            currentWord: word,
-            currentUrl: url
-          }, () => {
-            console.log('newState', this.state);
-          }
-      );
-    }
-  }
-
-  pageSelector() {
-    const currentWord = this.state.currentWord;
-    const currentUrl = this.state.currentUrl;
-    const currentList = this.state.currentList;
-    if (currentWord === null && currentList === null) {
-      return (
-        <HomePage handleClick={this.handleClick.bind(this)}/>
-      );
-    } else if (currentWord === null && currentList){
-      if (currentList === 'default') {
-        return (
-          <WordList
-            listName={this.state.currentList}
-            sightWords={this.state.sightWords}
-            urls={this.state.urls}
-            handleClick = {this.handleClick.bind(this)}
-          />
-        );
-      } else if (currentList === 'new') {
-        return (
-          <CreateWordList />
+          correctInput: null,
+          currentWord: word,
+          currentUrl: url
+        }, () => {
+          console.log('this.state', this.state);
+        }
         );
       }
+    }
 
-    } else {
-        return (<WordPractice
-          word={currentWord}
-          url={this.state.currentUrl}
-          handleSubmit={this.handleSubmit.bind(this)}
-        />);
+    pageSelector() {
+      const currentWord = this.state.currentWord;
+      const currentUrl = this.state.currentUrl;
+      const currentList = this.state.currentList;
+      const afterEval = this.state.correctInput
+      if (currentWord === null && currentList === null) {
+        return (
+          <HomePage handleClick={this.handleClick.bind(this)}/>
+          );
+        } else if (currentWord === null && currentList){
+          if (currentList === 'default'  && afterEval === null) {
+            return (
+              <WordList
+                listName={this.state.currentList}
+                sightWords={this.state.sightWords}
+                urls={this.state.urls}
+                handleClick = {this.handleClick.bind(this)}
+              />
+            );
+            } else if (currentList === 'new') {
+              return (
+                <CreateWordList />
+                );
+              }
+
+            } else if (afterEval !== null) {
+              const remainingSightWords = this.state.sightWords.filter(word => -1 === this.state.usedWords.indexOf(word));
+              const remainingUrls = this.state.urls.filter(
+                (url, i) => {
+                    const word = url.split('/')[2];
+                    return remainingSightWords.includes(word);
+              });
+              console.log('remainingSightWords', remainingSightWords);
+              console.log('remainingUrls', remainingUrls)
+              // if (remainingSightWords === 0) {
+              //   let redoSightWords = this.state.incorrectWords;
+              //   if (redoSightWords.length === 0) {
+              //     return (
+              //       <WordList
+              //         listName={this.state.currentList}
+              //         sightWords={remainingSightWords}
+              //         urls={remainingUrls}
+              //         handleClick = {this.handleClick.bind(this)}
+              //         usedWords={this.state.usedWords}
+              //         incorrectWords={this.state.incorrectWords}
+              //         lastWord={this.state.currentWord}
+              //         lastInputCorrect={this.state.correctInput}
+              //         stats={[this.state.correct, this.state.completed]}
+              //       />
+              //     );
+              //   }
+              // }
+              return (
+                <WordList
+                  listName={this.state.currentList}
+                  sightWords={remainingSightWords}
+                  urls={remainingUrls}
+                  handleClick = {this.handleClick.bind(this)}
+                  usedWords={this.state.usedWords}
+                  incorrectWords={this.state.incorrectWords}
+                  lastWord={this.state.currentWord}
+                  lastInputCorrect={this.state.correctInput}
+                  stats={[this.state.correct, this.state.completed]}
+                />
+              );
+            } else {
+              return (<WordPractice
+                word={currentWord}
+                url={this.state.currentUrl}
+                handleSubmit={this.handleSubmit.bind(this)}
+                />);
+              }
+            }
+
+
+  handleSubmit(tag) {
+    const refreshPage = this.pageSelector.bind(this);
+    const id = tag.target.children[1].id;
+    if (id === 'answer') {
+      const submittedAnswer = tag.target.children[1].value;
+      if (submittedAnswer === this.state.currentWord) {
+        this.setState((state) => {
+          console.log('state', state);
+          return {
+            correctInput: true,
+            usedWords: state.usedWords.concat(submittedAnswer),
+            correct: state.correct + 1,
+            completed: state.completed + 1
+          }
+        }, () => {
+          console.log('state', this.state);
+        });
+      } else {
+        this.setState((state) => {
+          return {
+            usedWords: state.usedWords.concat(submittedAnswer),
+            incorrectWords: state.usedWords.concat(submittedAnswer),
+            completed: state.completed + 1,
+            correctInput: false,
+          }
+        }, () => {
+          console.log('state', this.state);
+        });
+      }
     }
   }
-
-
 
   render () {
     let select = this.pageSelector();
@@ -132,3 +181,13 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+// return (<WordPractice
+//   word={this.state.currentWord}
+//   url={this.state.currentUrl}
+//   handleSubmit={this.handleSubmit.bind(this)}
+//   correct={this.state.correctInput}
+//   usedWords={this.state.usedWords}
+//   incorrectWords={this.state.incorrectWords}
+//   stats={[this.state.correct, this.state.completed]}
+//   />

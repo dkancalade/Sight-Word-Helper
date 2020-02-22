@@ -1,5 +1,5 @@
 import React from 'react';
-const WordPractice = ({word, url, handleSubmit}) => (
+const WordPractice = ({word, url, handleSubmit, correct, correctWords, incorrectWords, stats}) => (
   <div>
     <h2>Learn the Word Below</h2>
     <audio controls>
@@ -12,6 +12,8 @@ const WordPractice = ({word, url, handleSubmit}) => (
       <input id="spellcheck" type="submit" value="Submit" />
     </form>
   </div>
+
+
 );
 
 
