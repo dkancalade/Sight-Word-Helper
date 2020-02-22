@@ -41,6 +41,16 @@ const WordList = (props) => {
 
 return (
   <div>
+    <table>
+      <thead>
+        <tr>
+        <th>| Practice your spelling |</th>
+        <th>| Sight Word Flash Cards |</th>
+        </tr>
+      </thead>
+
+
+    </table>
     {createHead(props)}
     {props.sightWords.map(
       (sightWord, i) => (

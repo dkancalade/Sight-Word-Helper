@@ -84,7 +84,7 @@ class App extends React.Component {
         return (
           <HomePage handleClick={this.handleClick.bind(this)}/>
           );
-        } else if (currentWord === null && currentList){
+      } else if (currentWord === null && currentList){
           if (currentList === 'default'  && afterEval === null) {
             return (
               <WordList
@@ -99,37 +99,36 @@ class App extends React.Component {
                 <CreateWordList />
                 );
               }
-
-            } else if (afterEval !== null) {
-              const remainingSightWords = this.state.sightWords.filter(word => -1 === this.state.usedWords.indexOf(word));
-              const remainingUrls = this.state.urls.filter(
-                (url, i) => {
-                    const word = url.split('/')[2];
-                    return remainingSightWords.includes(word);
-              });
-              console.log('remainingSightWords', remainingSightWords);
-              console.log('remainingUrls', remainingUrls)
-              return (
-                <WordList
-                  listName={this.state.currentList}
-                  sightWords={remainingSightWords}
-                  urls={remainingUrls}
-                  handleClick = {this.handleClick.bind(this)}
-                  usedWords={this.state.usedWords}
-                  incorrectWords={this.state.incorrectWords}
-                  lastWord={this.state.currentWord}
-                  lastInputCorrect={this.state.correctInput}
-                  stats={[this.state.correct, this.state.completed]}
-                />
-              );
-            } else {
-              return (<WordPractice
-                word={currentWord}
-                url={this.state.currentUrl}
-                handleSubmit={this.handleSubmit.bind(this)}
-                />);
-              }
-            }
+      } else if (afterEval !== null) {
+          const remainingSightWords = this.state.sightWords.filter(word => -1 === this.state.usedWords.indexOf(word));
+          const remainingUrls = this.state.urls.filter(
+            (url, i) => {
+                const word = url.split('/')[2];
+                return remainingSightWords.includes(word);
+          });
+          console.log('remainingSightWords', remainingSightWords);
+          console.log('remainingUrls', remainingUrls)
+          return (
+            <WordList
+              listName={this.state.currentList}
+              sightWords={remainingSightWords}
+              urls={remainingUrls}
+              handleClick = {this.handleClick.bind(this)}
+              usedWords={this.state.usedWords}
+              incorrectWords={this.state.incorrectWords}
+              lastWord={this.state.currentWord}
+              lastInputCorrect={this.state.correctInput}
+              stats={[this.state.correct, this.state.completed]}
+            />
+          );
+      } else {
+          return (<WordPractice
+            word={currentWord}
+            url={this.state.currentUrl}
+            handleSubmit={this.handleSubmit.bind(this)}
+            />);
+      }
+    }
 
 
   handleSubmit(tag) {
