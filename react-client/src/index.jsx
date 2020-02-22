@@ -59,7 +59,20 @@ class App extends React.Component {
           console.log('this.state', this.state);
         }
         );
-      }
+    }
+    if (tag.id === 'restart') {
+      this.setState({
+        usedWords: [],
+        incorrectWords: [],
+        currentWord: null,
+        currentUrl: null,
+        correctInput: null,
+        correct: 0,
+        completed: 0
+      }, () => {
+        console.log('state', this.state);
+      })
+    }
     }
 
     pageSelector() {
@@ -96,24 +109,6 @@ class App extends React.Component {
               });
               console.log('remainingSightWords', remainingSightWords);
               console.log('remainingUrls', remainingUrls)
-              // if (remainingSightWords === 0) {
-              //   let redoSightWords = this.state.incorrectWords;
-              //   if (redoSightWords.length === 0) {
-              //     return (
-              //       <WordList
-              //         listName={this.state.currentList}
-              //         sightWords={remainingSightWords}
-              //         urls={remainingUrls}
-              //         handleClick = {this.handleClick.bind(this)}
-              //         usedWords={this.state.usedWords}
-              //         incorrectWords={this.state.incorrectWords}
-              //         lastWord={this.state.currentWord}
-              //         lastInputCorrect={this.state.correctInput}
-              //         stats={[this.state.correct, this.state.completed]}
-              //       />
-              //     );
-              //   }
-              // }
               return (
                 <WordList
                   listName={this.state.currentList}

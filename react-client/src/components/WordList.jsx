@@ -15,9 +15,18 @@ const WordList = (props) => {
       } else {
         if (props.sightWords.length === 0) {
           return (
-          <p>
-            You've Finished!  Your final stats are: {`${props.stats[0]}/${props.stats[1]}`}. If you missed any, try again to get a perfect score
-          </p>
+            <div>
+              <p>
+                You've Finished!  Your final stats are: {`${props.stats[0]}/${props.stats[1]}`}. If you missed any, try again to get a perfect score
+              </p>
+                <button
+                  id="restart"
+                  onClick = {(e) => {
+                    props.handleClick(e.target);
+                  }}
+                >
+                Restart</button>
+            </div>
           );
         } else {
           return (
