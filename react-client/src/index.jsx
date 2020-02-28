@@ -19,7 +19,8 @@ class App extends React.Component {
       currentUrl: null,
       correctInput: null,
       correct: 0,
-      completed: 0
+      completed: 0,
+      newList: []
     };
   }
 
@@ -73,7 +74,15 @@ class App extends React.Component {
         console.log('state', this.state);
       })
     }
+
+    if (tag.id === 'listCreator') {
+      console.log('tag', tag);
+      const input = tag.innerText;
+      this.setState((state, props) => (
+        {newList: state.newList.concat(tag.innerText)}
+      ));
     }
+  }
 
     pageSelector() {
       const currentWord = this.state.currentWord;
@@ -96,9 +105,12 @@ class App extends React.Component {
             );
             } else if (currentList === 'new') {
               return (
-                <CreateWordList />
-                );
-              }
+                <CreateWordList
+                  newList={this.state.newList}
+                  handleClick={this.handleClick.bind(this)}
+                />
+               );
+            }
       } else if (afterEval !== null) {
           const remainingSightWords = this.state.sightWords.filter(word => -1 === this.state.usedWords.indexOf(word));
           const remainingUrls = this.state.urls.filter(
@@ -175,13 +187,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-// return (<WordPractice
-//   word={this.state.currentWord}
-//   url={this.state.currentUrl}
-//   handleSubmit={this.handleSubmit.bind(this)}
-//   correct={this.state.correctInput}
-//   usedWords={this.state.usedWords}
-//   incorrectWords={this.state.incorrectWords}
-//   stats={[this.state.correct, this.state.completed]}
-//   />
