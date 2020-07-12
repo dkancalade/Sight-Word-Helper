@@ -1,5 +1,5 @@
 {
-  "name": "github-fetcher-fullstack-v2",
+  "name": "sightwordhelper",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,21 +7,20 @@
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js"
   },
-  "author": "Beth Johnson",
+  "author": "Dustin K. Ancalade",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.23.1",
-    "babel-loader": "^6.3.2",
+    "babel-loader": "^8.1.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
-    "webpack": "^2.2.1"
+    "minimist": ">=0.2.1",
+    "webpack": "^4.43.0"
   },
   "dependencies": {
-    "angular": "^1.6.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.0",
-    "jquery": "^3.1.1",
-    "mongoose": "^4.8.6",
+    "jquery": "^3.5.0",
     "mysql": "^2.13.0",
     "path": "^0.12.7",
     "react": "^15.4.2",
