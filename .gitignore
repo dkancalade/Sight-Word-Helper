@@ -1,3 +1,6 @@
 ## dependencies
 node_modules
 
+## api keys
+watson_api_key.js
+

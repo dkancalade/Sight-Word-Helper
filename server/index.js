@@ -1,30 +1,15 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
-// UNCOMMENT THE DATABASE YOU'D LIKE TO USE
-// var items = require('../database-mysql');
-// var items = require('../database-mongo');
+
+var items = require('../database-mysql');
+
 
 var app = express();
 
-// UNCOMMENT FOR REACT
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/../react-client/dist'));
-
-// UNCOMMENT FOR ANGULAR
-// app.use(express.static(__dirname + '/../angular-client'));
-// app.use(express.static(__dirname + '/../node_modules'));
-
-// app.get('/sightWords', function (req, res) {
-//   items.selectAll(function(err, data) {
-//     if(err) {
-//       res.sendStatus(500);
-//     } else {
-//       res.json(data);
-//     }
-//   });
-// });
 
 
 app.get('/default/:word', function (req, res) {
@@ -46,7 +31,11 @@ app.get('/default/:word', function (req, res) {
   //   }
   // });
 
+ //watson url: https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/919657ee-cdba-4f9a-bfc8-c194ef9145e7
+
 app.listen(3000, function() {
   console.log('listening on port 3000!');
 });
 
+
+// curl https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/919657ee-cdba-4f9a-bfc8-c194ef9145e7
