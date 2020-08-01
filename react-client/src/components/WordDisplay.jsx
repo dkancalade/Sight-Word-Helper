@@ -13,6 +13,6 @@ const WordDisplay = ({sightWord, url, handleClick}) => (
   >
       {sightWord}
   </div>
-)
+);
 
 export default WordDisplay;

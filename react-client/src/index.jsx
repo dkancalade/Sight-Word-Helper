@@ -10,9 +10,21 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sightWords: ['hi', 'you', 'we', 'get', 'set', 'how', 'who', 'it', 'the', 'and'],
+      sightWords: ['and', 'get', 'hi', 'how', 'it', 'set', 'the', 'we', 'who', 'you'],
+      listName: 'default',
       currentList: null,
-      urls: ['/default/hi', '/default/you', '/default/we', '/default/get', '/default/set', '/default/how', '/default/who', '/default/it', '/default/the', '/default/and'],
+      urls: [
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/and.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/get.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/hi.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/how.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/it.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/set.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/the.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/we.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/who.mp3',
+        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/you.mp3'
+      ],
       usedWords: [],
       incorrectWords: [],
       currentWord: null,
@@ -24,19 +36,19 @@ class App extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   $.ajax({
-  //     url: '/sightWords',
-  //     success: (data) => {
-  //       this.setState({
-  //         sightWords: data
-  //       })
-  //     },
-  //     error: (err) => {
-  //       console.log('err', err);
-  //     }
-  //   });
-  // }
+  componentDidMount() {
+    // $.ajax({
+    //   url: '/retrieveList',
+    //   success: (data) => {
+    //     this.setState({
+    //       sightWords: data
+    //     })
+    //   },
+    //   error: (err) => {
+    //     console.log('err', err);
+    //   }
+    // });
+  }
 
 
   handleClick(tag) {
@@ -57,7 +69,7 @@ class App extends React.Component {
           currentWord: word,
           currentUrl: url
         }, () => {
-          console.log('this.state', this.state);
+          console.log('state, Tag:Word', this.state);
         }
         );
     }
@@ -71,7 +83,7 @@ class App extends React.Component {
         correct: 0,
         completed: 0
       }, () => {
-        console.log('state', this.state);
+        // console.log('state', this.state);
       })
     }
 
@@ -88,13 +100,15 @@ class App extends React.Component {
       const currentWord = this.state.currentWord;
       const currentUrl = this.state.currentUrl;
       const currentList = this.state.currentList;
-      const afterEval = this.state.correctInput
+      const evalResult = this.state.correctInput;
+
+
       if (currentWord === null && currentList === null) {
         return (
           <HomePage handleClick={this.handleClick.bind(this)}/>
           );
       } else if (currentWord === null && currentList){
-          if (currentList === 'default'  && afterEval === null) {
+          if (currentList === 'default'  && evalResult === null) {
             return (
               <WordList
                 listName={this.state.currentList}
@@ -111,15 +125,12 @@ class App extends React.Component {
                 />
                );
             }
-      } else if (afterEval !== null) {
+      } else if (evalResult !== null) {
           const remainingSightWords = this.state.sightWords.filter(word => -1 === this.state.usedWords.indexOf(word));
-          const remainingUrls = this.state.urls.filter(
-            (url, i) => {
-                const word = url.split('/')[2];
-                return remainingSightWords.includes(word);
-          });
-          console.log('remainingSightWords', remainingSightWords);
-          console.log('remainingUrls', remainingUrls)
+          // remove the url that is not included in the remaining sight words
+          const remainingUrls = this.state.urls.filter(url => -1 === this.state.usedWords.indexOf(url.split('/')[4].split('.')[0]));
+          // console.log('remainingSightWords', remainingSightWords);
+          // console.log('remainingUrls', remainingUrls);
           return (
             <WordList
               listName={this.state.currentList}
@@ -141,7 +152,6 @@ class App extends React.Component {
             />);
       }
     }
-
 
   handleSubmit(tag) {
     const refreshPage = this.pageSelector.bind(this);

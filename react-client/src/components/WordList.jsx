@@ -7,7 +7,7 @@ const WordList = (props) => {
       if (props.lastWord && props.sightWords.length) {
         return (
           <div>
-            <h4> Current List: {props.currentList} </h4>
+            <h4> Current List: {props.listName} </h4>
             <p>There are { props.sightWords.length } words to practice.</p>
             <p>Your stats are: {`${props.stats[0]}/${props.stats[1]}`}</p>
           </div>
