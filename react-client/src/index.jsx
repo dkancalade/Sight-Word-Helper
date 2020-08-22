@@ -68,10 +68,7 @@ class App extends React.Component {
           correctInput: null,
           currentWord: word,
           currentUrl: url
-        }, () => {
-          console.log('state, Tag:Word', this.state);
-        }
-        );
+        });
     }
     if (tag.id === 'restart') {
       this.setState({
@@ -82,9 +79,7 @@ class App extends React.Component {
         correctInput: null,
         correct: 0,
         completed: 0
-      }, () => {
-        // console.log('state', this.state);
-      })
+      });
     }
 
     if (tag.id === 'listCreator') {
@@ -127,10 +122,7 @@ class App extends React.Component {
             }
       } else if (evalResult !== null) {
           const remainingSightWords = this.state.sightWords.filter(word => -1 === this.state.usedWords.indexOf(word));
-          // remove the url that is not included in the remaining sight words
           const remainingUrls = this.state.urls.filter(url => -1 === this.state.usedWords.indexOf(url.split('/')[4].split('.')[0]));
-          // console.log('remainingSightWords', remainingSightWords);
-          // console.log('remainingUrls', remainingUrls);
           return (
             <WordList
               listName={this.state.currentList}
@@ -160,15 +152,12 @@ class App extends React.Component {
       const submittedAnswer = tag.target.children[1].value;
       if (submittedAnswer === this.state.currentWord) {
         this.setState((state) => {
-          console.log('state', state);
           return {
             correctInput: true,
             usedWords: state.usedWords.concat(submittedAnswer),
             correct: state.correct + 1,
             completed: state.completed + 1
           }
-        }, () => {
-          console.log('state', this.state);
         });
       } else {
         this.setState((state) => {
@@ -178,8 +167,6 @@ class App extends React.Component {
             completed: state.completed + 1,
             correctInput: false,
           }
-        }, () => {
-          console.log('state', this.state);
         });
       }
     }
