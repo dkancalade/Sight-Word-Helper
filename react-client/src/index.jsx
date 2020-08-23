@@ -9,6 +9,7 @@ import CreateWordList from './components/CreateWordList.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       sightWords: ['and', 'get', 'hi', 'how', 'it', 'set', 'the', 'we', 'who', 'you'],
       urls: [
@@ -35,8 +36,10 @@ class App extends React.Component {
       correct: 0,
       completed: 0,
       // constructing new lists
-      newList: [],
       isCurrentList: false,
+      newListSize: 0,
+      newList:[],
+      newListName: null
     };
   }
 
@@ -54,6 +57,34 @@ class App extends React.Component {
     // });
   }
 
+  handleListSubmission(tag) {
+    //if you submit a word from the create word list page
+    if (tag.target.value === 'Start New List') {
+
+      const listSize = tag.target.closest('div').childNodes[1].childNodes[1].value;
+      const listName = tag.target.closest('div').childNodes[0].childNodes[1].value;
+      this.setState((state, props) => (
+        {newListName: listName, newListSize:listSize }
+      ), () => {
+        console.log('newState', this.state.newListName, this.state.listSize);
+      });
+    } else {
+      let wordContainers = document.getElementsByClassName('formElements');
+      this.setState((state,props) => {
+        let obj = {
+          newList: state.newList
+        };
+        for (let node of wordContainers) {
+          obj.newList.push(node.childNodes[1].value);
+        }
+        console.log('obj', obj.newList);
+        return obj;
+
+      }, console.log('newList', this.state.newList, this.state.newListName));
+    }
+
+  }
+
 
   handleClick(tag) {
     // if you click on Sight Word Lists
@@ -64,7 +95,8 @@ class App extends React.Component {
 
     // if you click on Create Custom List
     if (tag.id === 'create') {
-      this.setState({currentList: "new", currentPage: 'listMaker'}, () => {
+      this.setState({currentPage: 'createNewList'}, () => {
+        console.log('newstate', this.state.currentPage);
       });
     }
 
@@ -92,16 +124,6 @@ class App extends React.Component {
         correct: 0,
         completed: 0
       });
-    }
-
-    //if you submit a word from the create word list page
-    if (tag.id === 'listCreator') {
-      console.log('tag', tag);
-      const input = tag.innerText;
-      console.log('input', input);
-      this.setState((state, props) => (
-        {newList: state.newList.concat(tag.innerText)}
-      ));
     }
   }
 
@@ -164,16 +186,16 @@ class App extends React.Component {
     }
 
     // create a new sight word list
-    if (currentPage === 'listMaker') {
+    if (currentPage === 'createNewList') {
        //for the current list
-       if (currentList === 'new') {
         return (
           <CreateWordList
             newList={this.state.newList}
-            handleClick={this.handleClick.bind(this)}
+            newListName={this.state.newListName}
+            newListSize={this.state.newListSize}
+            handleListSubmission={this.handleListSubmission.bind(this)}
           />
           );
-      }
     }
 
 
