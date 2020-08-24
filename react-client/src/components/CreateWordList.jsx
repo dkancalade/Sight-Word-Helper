@@ -1,10 +1,10 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 
 const CreateWordList = (props) => {
 
-
+    // a 2 part form builder to create lists
     const createWordListForm = (listName, listLength) => {
-
+        //if there is no list specify the size and name of the list
         if (!listLength) {
           return (
             <div id='list-starter'>
@@ -16,10 +16,16 @@ const CreateWordList = (props) => {
                 <label htmlFor='count'>How many words do you want to be in this list? Max:20</label>
                 <input type='number' name='count'></input>
               </div>
-              <input id='listCreator' type='submit' value='Start New List' ></input>
+              <input
+                id='listCreator'
+                type='submit'
+                value='Start New List'
+                onClick={(e) => {e.preventDefault(), props.handleListSubmission(e)}}
+              ></input>
             </div>
           );
         } else if (listLength) {
+          // if there is a specified length already then build list
           let wordInputs = [];
             for (let i = 1; i <= listLength; i++) {
               wordInputs.push(
@@ -34,7 +40,12 @@ const CreateWordList = (props) => {
               {wordInputs.map((wordInput, i) => (
                 <div key={`wordInput-${i}`}>{wordInput}</div>
               ))}
-              <input id='list-submitter' type='submit' value='Complete List' ></input>
+              <input
+                id='list-submitter'
+                type='submit'
+                value='Complete List'
+                onClick={(e) => {e.preventDefault(), props.handleListSubmission(e)}}
+              ></input>
             </div>
           );
         } else {
@@ -45,7 +56,7 @@ const CreateWordList = (props) => {
     return (
       <div>
         <h2>Sight Words List Creator</h2>
-        <form id='create-new-list' onClick={(e) => {e.preventDefault(), props.handleListSubmission(e)}} >
+        <form id='create-new-list' >
           {createWordListForm(props.newListName, props.newListSize)}
         </form>
       </div>

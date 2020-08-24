@@ -58,7 +58,7 @@ class App extends React.Component {
   }
 
   handleListSubmission(tag) {
-    //if you submit a word from the create word list page
+    //if you submit the name and size of the list
     if (tag.target.value === 'Start New List') {
 
       const listSize = tag.target.closest('div').childNodes[1].childNodes[1].value;
@@ -68,7 +68,9 @@ class App extends React.Component {
       ), () => {
         console.log('newState', this.state.newListName, this.state.listSize);
       });
-    } else {
+    }
+    //if you submit the words in the list
+    if (tag.target.value === 'Complete List') {
       let wordContainers = document.getElementsByClassName('formElements');
       this.setState((state,props) => {
         let obj = {
@@ -77,12 +79,9 @@ class App extends React.Component {
         for (let node of wordContainers) {
           obj.newList.push(node.childNodes[1].value);
         }
-        console.log('obj', obj.newList);
         return obj;
-
       }, console.log('newList', this.state.newList, this.state.newListName));
     }
-
   }
 
 
