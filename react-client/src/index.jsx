@@ -66,9 +66,9 @@ class App extends React.Component {
 
       const listSize = tag.target.closest('div').childNodes[1].childNodes[1].value;
       const listName = tag.target.closest('div').childNodes[0].childNodes[1].value;
-      this.setState((state, props) => (
-        {newListName: listName, newListSize:listSize }
-      ), () => {
+      this.setState((state, props) => {
+        return {newListName: listName, newListSize:listSize }
+      }, () => {
         console.log('newState', this.state.newListName, this.state.listSize);
       });
     }
@@ -135,7 +135,7 @@ class App extends React.Component {
     const currentWord = this.state.currentWord;
     const currentUrl = this.state.currentUrl;
     const evalResult = this.state.correctInput;
-    const newList = this.state.newList;
+    let newList = this.state.newList;
 
 
     //default page
@@ -192,7 +192,7 @@ class App extends React.Component {
     // create a new sight word list page
     if (currentPage === 'createNewList') {
        //for the current list
-
+      console.log('newList', newList, Array.isArray(newList));
 
       return newList.length
         ?
