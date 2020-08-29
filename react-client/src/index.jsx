@@ -5,6 +5,7 @@ import HomePage from './components/HomePage.jsx';
 import WordList from './components/WordList.jsx';
 import WordPractice from './components/WordPractice.jsx';
 import CreateWordList from './components/CreateWordList.jsx';
+import DevelopWordList from './components/DevelopWordList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class App extends React.Component {
       correctInput: null,
       correct: 0,
       completed: 0,
+
       // constructing new lists
       isCurrentList: false,
       newListSize: 0,
@@ -57,6 +59,7 @@ class App extends React.Component {
     // });
   }
 
+  // how to handle new lists
   handleListSubmission(tag) {
     //if you submit the name and size of the list
     if (tag.target.value === 'Start New List') {
@@ -132,6 +135,7 @@ class App extends React.Component {
     const currentWord = this.state.currentWord;
     const currentUrl = this.state.currentUrl;
     const evalResult = this.state.correctInput;
+    const newList = this.state.newList;
 
 
     //default page
@@ -141,6 +145,7 @@ class App extends React.Component {
         );
     }
 
+    //activity page
     if (currentPage === 'practice') {
       //no words have been answered yet
       if (evalResult === null) {
@@ -184,22 +189,32 @@ class App extends React.Component {
              />);
     }
 
-    // create a new sight word list
+    // create a new sight word list page
     if (currentPage === 'createNewList') {
        //for the current list
-        return (
+
+
+      return newList.length
+        ?
+          < DevelopWordList
+            newList={this.state.newList}
+            newListName={this.state.newListName}
+            newListSize={this.state.newListSize}
+          />
+        :
           <CreateWordList
             newList={this.state.newList}
             newListName={this.state.newListName}
             newListSize={this.state.newListSize}
             handleListSubmission={this.handleListSubmission.bind(this)}
-          />
-          );
+          />;
     }
+
 
 
   }
 
+  // evaluation progress and statistics of activities
   handleAnswerSubmission(tag) {
     const id = tag.target.children[1].id;
 
@@ -230,7 +245,7 @@ class App extends React.Component {
         });
       }
     } else {
-      //anomaly
+      //in case of unexpected anomaly
       console.error('The current id is', id);
     }
   }
