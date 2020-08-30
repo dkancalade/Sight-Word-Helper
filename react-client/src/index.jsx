@@ -41,7 +41,8 @@ class App extends React.Component {
       isCurrentList: false,
       newListSize: 0,
       newList:[],
-      newListName: null
+      newListName: null,
+      newListUrls: []
     };
   }
 
@@ -57,6 +58,22 @@ class App extends React.Component {
     //     console.log('err', err);
     //   }
     // });
+  }
+
+  fetchData(info) {
+    fetch(`http://localhost:3000/type an endpoint here`,
+      {
+        method: 'PUT',
+        body: `${info}`
+      }
+    );
+      .then((data) => {
+
+    })
+      .catch((error) => {
+        console.log('error', error);
+      })
+
   }
 
   // how to handle new lists
@@ -127,6 +144,14 @@ class App extends React.Component {
         completed: 0
       });
     }
+
+    // get audio files for words
+
+    if (tag.id === 'audioFile') {
+      let newList = this.state.newList
+      fetchData(newList);
+
+
   }
 
   pageSelector() {
@@ -209,9 +234,6 @@ class App extends React.Component {
             handleListSubmission={this.handleListSubmission.bind(this)}
           />;
     }
-
-
-
   }
 
   // evaluation progress and statistics of activities
