@@ -4,7 +4,8 @@ const DevelopWordList = ({newList, newListName, newListSize}) => {
   const newWordList = newList.map((word, i) =>
     <li key={`newWordList-${i}`}>
       {word}
-      {/* <span>
+      {/* in case I want to give the user the option to verify and possible create their own audio file
+      <span>
         <button type='button' className={`audio-file-getter${i}`}>
           Get Audio File
         </button>

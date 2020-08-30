@@ -115,7 +115,6 @@ class App extends React.Component {
     // if you click on Create Custom List
     if (tag.id === 'create') {
       this.setState({currentPage: 'createNewList'}, () => {
-        console.log('newstate', this.state.currentPage);
       });
     }
 
@@ -217,8 +216,6 @@ class App extends React.Component {
     // create a new sight word list page
     if (currentPage === 'createNewList') {
        //for the current list
-      console.log('newList', newList, Array.isArray(newList));
-
       return newList.length
         ?
           < DevelopWordList
