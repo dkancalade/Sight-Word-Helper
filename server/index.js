@@ -1,28 +1,38 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
+const express = require('express');
+const items = require('../database-mysql');
+const bodyParser = require('body-parser');
+const path = require('path');
+// const { graphqlHTTP } = require('express-graphql');
+// const schema = require('./api/schema.js');
+// const rootValue = require('./api/root.js');
 
-var items = require('../database-mysql');
+
+
 
 
 var app = express();
 
+// app.use('/graphql',
+//   graphqlHTTP({
+//     schema,
+//     graphiql: true,
+//     rootValue
+//   })
+// );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/../react-client/dist'));
 
 
-app.get('/default/:word', function (req, res) {
-  const url= path.join(__dirname,`sight_words_audio/sight_words_${req.params.word}.mp3` );
-  res.sendFile(url, (err) => {
-    if (err) {
-      console.log(`error in get route default, ${req.params}`, error);
-      // res.sendStatus(201);
-      res.end();
-    }
-  })
-
-  });
+// app.get('/default/:word', function (req, res) {
+//   const url= path.join(__dirname,`sight_words_audio/sight_words_${req.params.word}.mp3` );
+//   res.sendFile(url, (err) => {
+//     if (err) {
+//       console.log(`error in get route default, ${req.params}`, error);
+//       res.end();
+//     }
+//   })
+// });
   // items.selectAll(function(err, data) {
   //   if(err) {
   //     res.sendStatus(500);

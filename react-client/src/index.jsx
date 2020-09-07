@@ -60,21 +60,21 @@ class App extends React.Component {
     // });
   }
 
-  fetchData(info) {
-    fetch(`http://localhost:3000/type an endpoint here`,
-      {
-        method: 'PUT',
-        body: `${info}`
-      }
-    );
-      .then((data) => {
+  // fetchData(info) {
+  //   fetch(`http://localhost:3000/type an endpoint here`,
+  //     {
+  //       method: 'PUT',
+  //       body: `${info}`
+  //     }
+  //   );
+  //     .then((data) => {
 
-    })
-      .catch((error) => {
-        console.log('error', error);
-      })
+  //   })
+  //     .catch((error) => {
+  //       console.log('error', error);
+  //     })
 
-  }
+  // }
 
   // how to handle new lists
   handleListSubmission(tag) {
@@ -107,15 +107,16 @@ class App extends React.Component {
 
   handleClick(tag) {
     // if you click on Sight Word Lists
+    // to be refactored when other lists are available
     if (tag.id === 'lists') {
       this.setState({currentList: 'default', currentPage: 'practice'}, () => {
+        console.log('lists', tag);
       });
     }
 
     // if you click on Create Custom List
     if (tag.id === 'create') {
-      this.setState({currentPage: 'createNewList'}, () => {
-      });
+      this.setState({currentPage: 'createNewList'});
     }
 
     // if you click on a word on Word Practice Page
@@ -146,12 +147,11 @@ class App extends React.Component {
 
     // get audio files for words
 
-    if (tag.id === 'audioFile') {
-      let newList = this.state.newList
-      fetchData(newList);
-
-
-  }
+    // if (tag.id === 'audioFile') {
+    //   let newList = this.state.newList
+    //   fetchData(newList);
+    // }
+  };
 
   pageSelector() {
     const currentList = this.state.currentList;
@@ -184,7 +184,8 @@ class App extends React.Component {
       }
 
       //a word has just been answered and evaluated
-      if (evalResult) {
+      console.log('evalResult', evalResult)
+      if (evalResult === true || evalResult === false) {
         const remainingSightWords = this.state.sightWords.filter(word => -1 === this.state.usedWords.indexOf(word));
         const remainingUrls = this.state.urls.filter(url => -1 === this.state.usedWords.indexOf(url.split('/')[4].split('.')[0]));
 
@@ -260,7 +261,9 @@ class App extends React.Component {
             completed: state.completed + 1,
             correctInput: false,
             currentPage: 'practice'
-          }
+          };
+        }, () => {
+          console.log('currentPage', this.state.currentPage);
         });
       }
     } else {
