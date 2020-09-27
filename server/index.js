@@ -1,28 +1,16 @@
 const express = require('express');
 const items = require('../database-mysql');
-const bodyParser = require('body-parser');
 const path = require('path');
-// const { graphqlHTTP } = require('express-graphql');
-// const schema = require('./api/schema.js');
-// const rootValue = require('./api/root.js');
+const graphqlExpress = require('apollo-server-express');
+const myGraphQLSchema = require('./api/root.js');
 
+const app = express();
 
+app.use('/graphql', express.json(), graphqlExpress({ schema: myGraphQLSchema }));
 
+app.use(express.urlencoded({extended: false}));
 
-
-var app = express();
-
-// app.use('/graphql',
-//   graphqlHTTP({
-//     schema,
-//     graphiql: true,
-//     rootValue
-//   })
-// );
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/../react-client/dist'));
-
 
 // app.get('/default/:word', function (req, res) {
 //   const url= path.join(__dirname,`sight_words_audio/sight_words_${req.params.word}.mp3` );

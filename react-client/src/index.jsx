@@ -7,6 +7,7 @@ import WordPractice from './components/WordPractice.jsx';
 import CreateWordList from './components/CreateWordList.jsx';
 import DevelopWordList from './components/DevelopWordList.jsx';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
