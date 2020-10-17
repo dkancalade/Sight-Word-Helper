@@ -1,7 +1,5 @@
-const rootValue = {
-  postList: () => {
-    return 'Hello world!';
-  },
+const root = {
+  hello: () => 'Hello world',
 };
 
-module.exports = rootValue;
+module.exports = root;
