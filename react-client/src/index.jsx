@@ -48,17 +48,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // $.ajax({
-    //   url: '/retrieveList',
-    //   success: (data) => {
-    //     this.setState({
-    //       sightWords: data
-    //     })
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   }
-    // });
+    fetch('/graphql', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({query: "{ default }"})
+    })
+      .then(r => r.json())
+      .then(data => console.log('data returned:', data));
   }
 
   // fetchData(info) {
@@ -69,12 +68,10 @@ class App extends React.Component {
   //     }
   //   );
   //     .then((data) => {
-
   //   })
   //     .catch((error) => {
   //       console.log('error', error);
   //     })
-
   // }
 
   // how to handle new lists

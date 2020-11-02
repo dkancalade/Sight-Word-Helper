@@ -4,7 +4,7 @@ const { buildSchema } = graphql;
 
 const schema = buildSchema(
   `type Query {
-      hello: String
+      default: String
   }`,
 );
 

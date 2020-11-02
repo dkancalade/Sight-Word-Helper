@@ -6,14 +6,15 @@ USE SightWords;
 
 CREATE TABLE Words (
   id int NOT NULL AUTO_INCREMENT,
-  Name varchar(20) NOT NULL UNIQUE,
-  Url varchar(100) NOT NULL UNIQUE,
+  name varchar(20) NOT NULL UNIQUE,
+  url varchar(100) NOT NULL UNIQUE,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE Lists (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
+  grade_level varchar(20) NOT NULL,
   PRIMARY KEY (id)
 );
 
