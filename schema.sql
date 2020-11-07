@@ -11,11 +11,17 @@ CREATE TABLE Words (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE Courses (
+  id int NOT NULL AUTO_INCREMENT,
+  name varchar(20) NOT NULL UNIQUE,
+);
+
 CREATE TABLE Lists (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
-  grade_level varchar(20) NOT NULL,
+  course_name varchar(20) NOT NULL,
   PRIMARY KEY (id)
+  FOREIGN KEY (course_name) REFERNCES Courses (name);
 );
 
 CREATE TABLE Lists_Words (
@@ -26,6 +32,7 @@ CREATE TABLE Lists_Words (
   FOREIGN KEY (list_id) REFERENCES Lists(id),
   FOREIGN KEY (word_id) REFERENCES Words(id)
 );
+
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < schema.sql

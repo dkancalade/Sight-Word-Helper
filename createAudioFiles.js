@@ -8,7 +8,6 @@ const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({ apikey: watson_api_key })
 });
 
-
 // const synthesizeParams = {
 //   text: 'Hello from IBM Watson',
 //   accept: 'audio/mp3',
@@ -24,14 +23,12 @@ let kinderParams = kindergartenWords.map((word) => {
   return obj;
 });
 
-
-
 for (let i = 0; i < kinderParams.length; i++) {
   textToSpeech
     .synthesize(kinderParams[i])
     .then(response => {
       const audio = response.result;
-      audio.pipe(fs.createWriteStream(`./sight_words_audio/${kinderParams[i].text}.mp3`));
+      audio.pipe(fs.createWriteStream(`./kindergarten_words_audio/${kinderParams[i].text}.mp3`));
     })
     .catch(err => {
       console.log('error:', err);
