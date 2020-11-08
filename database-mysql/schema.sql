@@ -4,6 +4,12 @@ CREATE DATABASE SightWords;
 
 USE SightWords;
 
+CREATE TABLE Courses (
+  id int NOT NULL AUTO_INCREMENT,
+  name varchar(20) NOT NULL UNIQUE,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE Words (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
@@ -11,17 +17,12 @@ CREATE TABLE Words (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Courses (
-  id int NOT NULL AUTO_INCREMENT,
-  name varchar(20) NOT NULL UNIQUE,
-);
-
 CREATE TABLE Lists (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL UNIQUE,
-  course_name varchar(20) NOT NULL,
-  PRIMARY KEY (id)
-  FOREIGN KEY (course_name) REFERNCES Courses (name);
+  course_id int NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (course_id) REFERENCES Courses (id)
 );
 
 CREATE TABLE Lists_Words (
@@ -29,8 +30,8 @@ CREATE TABLE Lists_Words (
   list_id int NOT NULL,
   word_id int NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (list_id) REFERENCES Lists(id),
-  FOREIGN KEY (word_id) REFERENCES Words(id)
+  FOREIGN KEY (list_id) REFERENCES Lists (id),
+  FOREIGN KEY (word_id) REFERENCES Words (id)
 );
 
 

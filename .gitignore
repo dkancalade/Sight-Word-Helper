@@ -2,11 +2,12 @@
 node_modules
 
 ## api keys
-watson_api_key.js
+database-mysql/dataGeneration/watson_api_key.js
 
 
 ## bundles
 react-client/dist/bundle.js
 
 ## sightWords
-kindergarten_words_audio
+database-mysql/data/kindergarten_words_audio
+database-mysql/data/kindergartenWords.js

@@ -1,6 +1,8 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-restricted-syntax */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
+// import $ from 'jquery';
 import HomePage from './components/HomePage.jsx';
 import WordList from './components/WordList.jsx';
 import WordPractice from './components/WordPractice.jsx';
@@ -14,18 +16,7 @@ class App extends React.Component {
 
     this.state = {
       sightWords: ['and', 'get', 'hi', 'how', 'it', 'set', 'the', 'we', 'who', 'you'],
-      urls: [
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/and.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/get.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/hi.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/how.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/it.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/set.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/the.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/we.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/who.mp3',
-        'https://site-words-helper.s3-us-west-1.amazonaws.com/sight_words_audio/you.mp3'
-      ],
+      urls: [],
       currentList: null,
       currentPage: 'home',
 
@@ -39,12 +30,15 @@ class App extends React.Component {
       completed: 0,
 
       // constructing new lists
-      isCurrentList: false,
+      // isCurrentList: false,
       newListSize: 0,
       newList:[],
       newListName: null,
-      newListUrls: []
+      // newListUrls: []
     };
+
+    this.handleClick = this.handleClick.bind(this);
+    this.handleAnswerSubmission = this.handleAnswerSubmission.bind(this);
   }
 
   componentDidMount() {
@@ -76,25 +70,25 @@ class App extends React.Component {
 
   // how to handle new lists
   handleListSubmission(tag) {
-    //if you submit the name and size of the list
+    // if you submit the name and size of the list
     if (tag.target.value === 'Start New List') {
 
       const listSize = tag.target.closest('div').childNodes[1].childNodes[1].value;
       const listName = tag.target.closest('div').childNodes[0].childNodes[1].value;
-      this.setState((state, props) => {
+      this.setState(() => {
         return {newListName: listName, newListSize:listSize }
       }, () => {
         console.log('newState', this.state.newListName, this.state.listSize);
       });
     }
-    //if you submit the words in the list
+    // if you submit the words in the list
     if (tag.target.value === 'Complete List') {
-      let wordContainers = document.getElementsByClassName('formElements');
-      this.setState((state,props) => {
-        let obj = {
+      const wordContainers = document.getElementsByClassName('formElements');
+      this.setState((state) => {
+        const obj = {
           newList: state.newList
         };
-        for (let node of wordContainers) {
+        for (const node of wordContainers) {
           obj.newList.push(node.childNodes[1].value);
         }
         return obj;
@@ -119,7 +113,7 @@ class App extends React.Component {
 
     // if you click on a word on Word Practice Page
     if (tag.className === 'word') {
-      const url = tag.dataset.url;
+      const {url} = tag.dataset;
       const word = tag.innerText;
       this.setState(
         {
@@ -151,48 +145,87 @@ class App extends React.Component {
     // }
   };
 
+
+  // evaluation progress and statistics of activities
+  handleAnswerSubmission(tag) {
+    const {id} = tag.target.children[1];
+
+    if (id === 'answer') {
+      const submittedAnswer = tag.target.children[1].value;
+
+      if (submittedAnswer === this.state.currentWord) {
+        // correct answer provided
+        this.setState((state) => {
+          return {
+            correctInput: true,
+            usedWords: state.usedWords.concat(submittedAnswer),
+            correct: state.correct + 1,
+            completed: state.completed + 1,
+            currentPage: 'practice'
+          }
+        });
+      } else {
+        // incorrect answer provided
+        this.setState((state) => {
+          return {
+            usedWords: state.usedWords.concat(submittedAnswer),
+            incorrectWords: state.usedWords.concat(submittedAnswer),
+            completed: state.completed + 1,
+            correctInput: false,
+            currentPage: 'practice'
+          };
+        }, () => {
+          console.log('currentPage', this.state.currentPage);
+        });
+      }
+    } else {
+      // in case of unexpected anomaly
+      console.error('The current id is', id);
+    }
+  }
+
   pageSelector() {
-    const currentList = this.state.currentList;
-    const currentPage = this.state.currentPage;
-    const currentWord = this.state.currentWord;
-    const currentUrl = this.state.currentUrl;
+    // const {currentList} = this.state;
+    const {currentPage} = this.state;
+    const {currentWord} = this.state;
+    // const {currentUrl} = this.state;
     const evalResult = this.state.correctInput;
-    let newList = this.state.newList;
+    const {newList} = this.state;
 
 
-    //default page
+    // default page
     if (currentPage === 'home') {
       return (
-        <HomePage handleClick={this.handleClick.bind(this)}/>
+        <HomePage handleClick={this.handleClick}/>
         );
     }
 
-    //activity page
+    // activity page
     if (currentPage === 'practice') {
-      //no words have been answered yet
+      // no words have been answered yet
       if (evalResult === null) {
         return (
           <WordList
             listName={this.state.currentList}
             sightWords={this.state.sightWords}
             urls={this.state.urls}
-            handleClick = {this.handleClick.bind(this)}
+            handleClick = {this.handleClick}
           />
         );
       }
 
-      //a word has just been answered and evaluated
+      // a word has just been answered and evaluated
       console.log('evalResult', evalResult)
       if (evalResult === true || evalResult === false) {
-        const remainingSightWords = this.state.sightWords.filter(word => -1 === this.state.usedWords.indexOf(word));
-        const remainingUrls = this.state.urls.filter(url => -1 === this.state.usedWords.indexOf(url.split('/')[4].split('.')[0]));
+        const remainingSightWords = this.state.sightWords.filter(word => this.state.usedWords.indexOf(word) === -1);
+        const remainingUrls = this.state.urls.filter(url => this.state.usedWords.indexOf(url.split('/')[4].split('.')[0]) === -1);
 
         return (
           <WordList
             listName={this.state.currentList}
             sightWords={remainingSightWords}
             urls={remainingUrls}
-            handleClick = {this.handleClick.bind(this)}
+            handleClick = {this.handleClick}
             usedWords={this.state.usedWords}
             incorrectWords={this.state.incorrectWords}
             lastWord={this.state.currentWord}
@@ -208,13 +241,13 @@ class App extends React.Component {
            return (<WordPractice
              word={currentWord}
              url={this.state.currentUrl}
-             handleAnswerSubmission={this.handleAnswerSubmission.bind(this)}
+             handleAnswerSubmission={this.handleAnswerSubmission}
              />);
     }
 
     // create a new sight word list page
     if (currentPage === 'createNewList') {
-       //for the current list
+       // for the current list
       return newList.length
         ?
           < DevelopWordList
@@ -227,52 +260,15 @@ class App extends React.Component {
             newList={this.state.newList}
             newListName={this.state.newListName}
             newListSize={this.state.newListSize}
-            handleListSubmission={this.handleListSubmission.bind(this)}
+            handleListSubmission={this.handleListSubmission}
           />;
     }
-  }
 
-  // evaluation progress and statistics of activities
-  handleAnswerSubmission(tag) {
-    const id = tag.target.children[1].id;
-
-    if (id === 'answer') {
-      const submittedAnswer = tag.target.children[1].value;
-
-      if (submittedAnswer === this.state.currentWord) {
-        //correct answer provided
-        this.setState((state) => {
-          return {
-            correctInput: true,
-            usedWords: state.usedWords.concat(submittedAnswer),
-            correct: state.correct + 1,
-            completed: state.completed + 1,
-            currentPage: 'practice'
-          }
-        });
-      } else {
-        //incorrect answer provided
-        this.setState((state) => {
-          return {
-            usedWords: state.usedWords.concat(submittedAnswer),
-            incorrectWords: state.usedWords.concat(submittedAnswer),
-            completed: state.completed + 1,
-            correctInput: false,
-            currentPage: 'practice'
-          };
-        }, () => {
-          console.log('currentPage', this.state.currentPage);
-        });
-      }
-    } else {
-      //in case of unexpected anomaly
-      console.error('The current id is', id);
-    }
   }
 
   render () {
     // renders appropriate Component
-    let select = this.pageSelector();
+    const select = this.pageSelector();
     return (
       <div>
         {select}
