@@ -3,6 +3,10 @@ const mysql = require('mysql');
 const dbHelpers = require(`../dbHelpers.js`);
 // const path = require('path');
 const kindergartenWords = require('../data/kindergartenWords.js');
+  // const kindergartenCourse = require('../data/kindergartenCourse.js');
+
+const kindergartenLists = ['red', 'orange', 'yellow', 'green', 'light blue', 'blue', 'purple', 'violet', 'pink', 'white'];
+const courseName = 'kindergarten';
 
 const connection = mysql.createConnection({
     host     : 'localhost',
@@ -14,8 +18,6 @@ const connection = mysql.createConnection({
 const rootUrl = 'https://site-words-helper.s3-us-west-1.amazonaws.com';
 const filePath = 'sight_words_audio';
 const fileType = '.mp3';
-const courseName = 'kindergarten';
-const kindergartenLists = ['red', 'orange', 'yellow', 'green', 'light blue', 'blue', 'purple', 'violet', 'pink', 'white'];
 const audioUrls = dbHelpers.audioUrls(rootUrl, filePath, fileType, kindergartenWords);
 const kindergartenWordsQuery = dbHelpers.insertWords(kindergartenWords, audioUrls);
 const kindergartenListsQuery = dbHelpers.insertLists(kindergartenLists, courseName);
