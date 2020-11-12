@@ -1,9 +1,11 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 const mysql = require('mysql');
 
 const dbHelpers = require(`../dbHelpers.js`);
 // const path = require('path');
 const kindergartenWords = require('../data/kindergartenWords.js');
-  // const kindergartenCourse = require('../data/kindergartenCourse.js');
+const kindergartenCourse = require('../data/kindergartenCourse.js');
 
 const kindergartenLists = ['red', 'orange', 'yellow', 'green', 'light blue', 'blue', 'purple', 'violet', 'pink', 'white'];
 const courseName = 'kindergarten';
@@ -21,10 +23,11 @@ const fileType = '.mp3';
 const audioUrls = dbHelpers.audioUrls(rootUrl, filePath, fileType, kindergartenWords);
 const kindergartenWordsQuery = dbHelpers.insertWords(kindergartenWords, audioUrls);
 const kindergartenListsQuery = dbHelpers.insertLists(kindergartenLists, courseName);
-console.log('words', kindergartenWordsQuery);
+const kindergartenWordListQuery = dbHelpers.insertListWord(kindergartenCourse);
+
 
 // course insertion
-connection.query(`INSERT INTO Courses values (${courseName})`, (err) => {
+connection.query(`INSERT INTO Courses (name) VALUES ('${courseName}')`, (err) => {
   if (err) {
     console.log('error inserting Course', err);
   } else {
@@ -54,10 +57,12 @@ connection.query(
 
 
 // lists_words insertion
-connection.query((`INSERT INTO Lists_Words values (1, 1, 1), (2, 1, 2), (3, 1, 3), (4,1,4), (5,1,5), (6,1,6), (7,1,7), (8,1,8), (9,1,9), (10,1,10)`), (err) => {
+connection.query(kindergartenWordListQuery, (err) => {
   if (err) {
     console.log('error', err);
   } else {
     console.log('inserted');
   }
 });
+
+connection.end();

@@ -8,12 +8,6 @@ const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({ apikey: watsonApiKey })
 });
 
-// const synthesizeParams = {
-//   text: 'Hello from IBM Watson',
-//   accept: 'audio/mp3',
-//   voice: 'en-US_AllisonVoice',
-// };
-
 const kinderParams = kindergartenWords.map((word) => {
   const obj = {
     text: word,
