@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
@@ -10,19 +11,33 @@ const connection = mysql.createConnection({
 connection.connect();
 
 const root = {
-  default: () => {
-
-  connection.connect();
-
-  connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-    if (error) throw error;
-    console.log('The solution is: ', results[0].solution);
-  });
-
-connection.end();
-
+  Courses: connection.query('SELECT * from Courses', function (error, results) {
+    if (error) {
+      throw error;
+    } else {
+      return results;
+    }
+  }),
+  getListsFromCourse: ({course}) => {
+    connection.query(`Select * from ${course}`, function (error, results) {
+      if (error) {
+        throw error;
+      } else {
+        return results;
+      }
+    })
+  },
+  getWordsFromList: ({list}) => {
+    connection.query(`Select * from Words INNER JOIN Lists_Words where (Words.id = Lists_Words.words_id)`
   }
 
 };
+
+
+}
+
+};
+
+connection.end();
 
 module.exports = root;

@@ -4,8 +4,9 @@ const { buildSchema } = graphql;
 
 const schema = buildSchema(
   `type Query {
-      default: String
-  }`,
-);
+      Courses: [ String ]
+      getListsfromCourse(course: String!): [ String ]
+      getWordsFromList(list: String!): [ String ]
+`);
 
 module.exports = schema;
