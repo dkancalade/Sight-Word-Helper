@@ -28,7 +28,13 @@ const root = {
     })
   },
   getWordsFromList: ({list}) => {
-    connection.query(`Select * from Words INNER JOIN Lists_Words where (Words.id = Lists_Words.words_id)`
+    connection.query(`Select Words.word, Words.url from ((Words INNER JOIN Lists_Words ON Words.id = Lists_Words.words_id) INNER JOIN Lists Lists_Words.List_id = Lists.id)`, function (error, results) {
+      if (error) {
+        throw error;
+      } else {
+        return results;
+      }
+    }
   }
 
 };
