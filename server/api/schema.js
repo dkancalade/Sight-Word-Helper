@@ -4,9 +4,12 @@ const { buildSchema } = graphql;
 
 const schema = buildSchema(
   `type Query {
-      Courses: [ String ]
-      getListsfromCourse(course: String!): [ String ]
-      getWordsFromList(list: String!): [ String ]
-`);
+      courses: [ String ]
+  }`
+);
 
 module.exports = schema;
+
+
+// getListsfromCourse(course: String!): [ String ]
+//       getWordsFromList(list: String!): [ String ]
