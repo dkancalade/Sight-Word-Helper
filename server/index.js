@@ -4,7 +4,6 @@ const cors = require('cors');
 const { graphqlHTTP } = require('express-graphql');
 // const items = require('../database-mysql');
 const root = require('./api/root.js');
-console.log('root', root.course('kindergarten'));
 const myGraphQLSchema = require('./api/schema.js');
 
 const app = express();

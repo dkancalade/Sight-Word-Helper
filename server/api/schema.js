@@ -2,7 +2,7 @@ const graphql = require('graphql');
 
 const { buildSchema } = graphql;
 
-// const { GraphQLSchema GraphQLObjectType, GraphQLString, GraphQLInt} = graphql;
+// const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQL} = graphql;
 
 const schema = buildSchema(
 
@@ -12,49 +12,69 @@ const schema = buildSchema(
     url: String!
   }
 
+  type Course {
+    course_id: [ID!]!
+    name: [String!]!
+  }
+
   type WordList {
     id: [ID!]!
     name: [String!]!
-    course_id: Int!
+    course_id: [Int!]!
   }
 
-  type Course {
-    course_id: ID!
-    name: String!
-  }
 
   type Query {
     course(name: String!): WordList!
     courses: [String!]!
+    words(listName: String!): [Words!]!
   }`
 
 );
 
-// const schema = new GraphQLSchema({query: queryType})
 
-// const CourseType = new GraphQLObjectType({
-//   name: 'Course',
-//   fields:
-//     courseName: { type: GraphQLString},
-//     courseId: { type: GraphQLInt}
+// const WordListType = new GraphQLObjectType({
+//   name: 'WordList',
+//   description: 'The lists that make up a course',
+//   fields: {
+//     id: { type: GraphQLInt},
+//     name: { type: GraphQLString },
+//     course_id: { type: GraphQLInt }
+//   }
 // });
 
-// const queryType = new GraphQLObjectType({
+// const CourseType = new GraphQLObjectType({
+//   name: 'CourseList',
+//   description: 'Retrieves the list of courses available to take',
+//   fields: {
+//     id: { type: GraphQLInt },
+//     name: {type: GraphQLString}
+//   }
+// });
+
+// const RootQueryType = new GraphQLObjectType({
 //   name: 'Query',
+//   description: 'Root Query',
 //   fields: {
 //     course: {
-//       type: courseType,
-//       args: {
-
-//       },
-//       resolve: (root, args, context, info) {
-
+//       type: WordListType,
+//       args: { name: {type: GraphQLString} },
+//       resolve: (course, args, context, info) => {
+//         const obj = { 'course': course.name };
+//         return obj;
+//       }
+//     },
+//     courses: {
+//       type: CourseType,
+//       resolve: (courses, args, context, info) => {
+//         let obj = {'courses': courses.name}
+//         return obj;
 //       }
 //     }
 //   }
-
 // });
 
+// const schema = new GraphQLSchema({query: RootQueryType});
 
 module.exports = schema;
 
