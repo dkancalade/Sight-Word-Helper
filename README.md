@@ -1,1 +1,3 @@
+<!-- @format -->
+
 # Sight-Word-Helper
