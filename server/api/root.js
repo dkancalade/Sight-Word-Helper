@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const { Promise } = require('bluebird');
+
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
@@ -33,7 +34,7 @@ const root = {
     return getCourseList();
   },
   course: async (course) => {
-    const getCourseInfo = async (course) => {
+    const getCourseInfo = async () => {
       const courseListPromise = new Promise((resolve, reject) => {
         connection.query(`Select Lists.name from Lists INNER JOIN Courses where Lists.course_id = Courses.id and Courses.name = '${course.name}'`, (error, results) => {
           if (error) {
@@ -50,11 +51,11 @@ const root = {
       });
       return lists;
     };
-    let info = await getCourseInfo(course);
+    const info = await getCourseInfo(course);
     return { name : info };
   },
   words: async (listName) => {
-    const getWordsFromList = async (listName) => {
+    const getWordsFromList = async () => {
 
       const wordListPromise = new Promise((resolve, reject) => {
         connection.query(`Select Words.name, Words.url from ((Words INNER JOIN Lists_Words ON Words.id = Lists_Words.word_id) INNER JOIN Lists ON Lists_Words.list_id = Lists.id and Lists.name = '${listName.listName}')`, function (error, results) {
