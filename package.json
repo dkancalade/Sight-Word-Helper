@@ -6,7 +6,8 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
-    "start": "concurrently \"npm run react-dev\" \"npm run server-dev\""
+    "start": "concurrently \"npm run react-dev\" \"npm run server-dev\"",
+    "seed-kinder": "node ./database-mysql/seeds/kindergartenSightWordSeed.js"
   },
   "author": "Dustin K. Ancalade",
   "license": "ISC",

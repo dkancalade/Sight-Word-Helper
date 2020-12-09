@@ -1,9 +1,11 @@
 const mysql = require('mysql');
 
+const { database } = require('../../credentials.js');
+
 const connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : `${database.login}`,
+  password : `${database.password}`,
   database : 'SightWords'
 
 });
@@ -14,6 +16,7 @@ connection.query(`Select * from Lists INNER JOIN Courses where Lists.course_id =
   if (error) {
     return error;
   }
+    // console.log('results', results);
     return results;
 });
 

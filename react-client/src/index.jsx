@@ -42,16 +42,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/graphql', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({query: "{ default }"})
-    })
-      .then(r => r.json())
-      .then(data => console.log('data returned:', data));
+    // fetch('/graphql', {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json',
+    //   },
+    //   body: JSON.stringify({query: "{ default }"})
+    // })
+    //   .then(r => r.json())
+    //   .then(data => console.log('data returned:', data));
   }
 
   // fetchData(info) {

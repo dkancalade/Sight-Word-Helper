@@ -1,19 +1,21 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
+
 const mysql = require('mysql');
+const { database } = require('../../credentials.js');
 
 const dbHelpers = require(`../dbHelpers.js`);
-// const path = require('path');
 const kindergartenWords = require('../data/kindergartenWords.js');
 const kindergartenCourse = require('../data/kindergartenCourse.js');
+
 
 const kindergartenLists = ['red', 'orange', 'yellow', 'green', 'light blue', 'blue', 'purple', 'violet', 'pink', 'white'];
 const courseName = 'kindergarten';
 
 const connection = mysql.createConnection({
     host     : 'localhost',
-    user     : 'root',
-    password : '',
+    user     : `${database.login}`,
+    password : `${database.password}`,
     database : 'SightWords'
   });
 

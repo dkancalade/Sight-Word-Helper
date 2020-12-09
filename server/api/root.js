@@ -1,10 +1,11 @@
 const mysql = require('mysql');
 const { Promise } = require('bluebird');
+const { database } = require('../../credentials.js');
 
 const connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : 'password',
+  user     : `${database.login}`,
+  password : `${database.password}`,
   database : 'SightWords'
 
 });
