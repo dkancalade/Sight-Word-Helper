@@ -1,7 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 import React from 'react';
-
 import HomePage from './HomePage.jsx';
 import WordList from './WordList.jsx';
 import WordPractice from './WordPractice.jsx';
@@ -41,31 +40,18 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // fetch('/graphql', {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json',
-    //   },
-    //   body: JSON.stringify({query: "{ default }"})
-    // })
-    //   .then(r => r.json())
-    //   .then(data => console.log('data returned:', data));
+    fetch('/graphql', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({query: "{ default }"})
+    })
+      .then(r => r.json())
+      .then(data => console.log('data returned:', data));
   }
 
-  // fetchData(info) {
-  //   fetch(`http://localhost:3000/type an endpoint here`,
-  //     {
-  //       method: 'PUT',
-  //       body: `${info}`
-  //     }
-  //   );
-  //     .then((data) => {
-  //   })
-  //     .catch((error) => {
-  //       console.log('error', error);
-  //     })
-  // }
 
   // how to handle new lists
   handleListSubmission(tag) {
@@ -94,7 +80,6 @@ class App extends React.Component {
       }, console.log('newList', this.state.newList, this.state.newListName));
     }
   }
-
 
   handleClick(tag) {
     // if you click on Sight Word Lists
@@ -183,6 +168,10 @@ class App extends React.Component {
     }
   }
 
+  // getCourseList() {
+
+  // }
+
   pageSelector() {
     // const {currentList} = this.state;
     const { currentPage } = this.state;
@@ -216,7 +205,7 @@ class App extends React.Component {
       // a word has just been answered and evaluated
       console.log('evalResult', evalResult)
       if (evalResult === true || evalResult === false) {
-        const remainingSightWords = this.state.sightWords.filter(word => this.state.usedWords.indexOf(word) === -1);
+        const remainingSightWords = this.state.sightWords.filter( word => this.state.usedWords.indexOf(word) === -1 );
         const remainingUrls = this.state.urls.filter(url => this.state.usedWords.indexOf(url.split('/')[4].split('.')[0]) === -1);
 
         return (
