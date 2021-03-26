@@ -1,6 +1,10 @@
-var path = require('path');
-var SRC_DIR = path.join(__dirname, '/react-client/src');
-var DIST_DIR = path.join(__dirname, '/react-client/dist');
+
+
+const path = require('path');
+
+
+const SRC_DIR = path.join(__dirname, '/react-client/src');
+const DIST_DIR = path.join(__dirname, '/react-client/dist');
 
 module.exports = {
   mode: 'development',
@@ -17,7 +21,8 @@ module.exports = {
         use: {
           loader : 'babel-loader',
           options: {
-            'presets': ['@babel/preset-env', '@babel/preset-react']
+            'presets': ['@babel/preset-env', '@babel/preset-react'],
+            'plugins': ['@babel/plugin-transform-runtime']
           }
         }
       }

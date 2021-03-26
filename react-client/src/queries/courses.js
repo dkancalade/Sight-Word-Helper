@@ -1,21 +1,21 @@
-import { gql, useQuery } from '@apollo/client';
+// import { gql, useQuery } from '@apollo/client';
 
-const courses = () => {
+// const courses = async () => {
+//   const { loading, error, data } = await useQuery(gql`{
+//     courses
+//   }`);
+//   console.log('afterQuery');
+//   if (loading) {
+//     console.log('loading', loading);
+//     return loading;
+//   }
+//   if (error) {
+//     console.log('error', error);
+//     return error;
+//   }
 
-  const { loading, error, data } = useQuery(gql`{
-    courses
-  }`);
+//     console.log('data', data);
+//     return data;
+// }
 
-  if (loading) {
-    return loading;
-  }
-  if (error) {
-    return error;
-  }
-  if (data) {
-    return data;
-  }
-  return null;
-}
-
-export default courses;
+// export default courses;

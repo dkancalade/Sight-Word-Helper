@@ -6,6 +6,9 @@ import WordList from './WordList.jsx';
 import WordPractice from './WordPractice.jsx';
 import CreateWordList from './CreateWordList.jsx';
 import DevelopWordList from './DevelopWordList.jsx';
+// import words from '../queries/words.js';
+// import wordLists from '../queries/wordLists.js';
+// import courses from '../queries/courses.js';
 
 
 class App extends React.Component {
@@ -13,7 +16,10 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      sightWords: ['and', 'get', 'hi', 'how', 'it', 'set', 'the', 'we', 'who', 'you'],
+      //  listOfCourses: '',
+      // wordLists: '',
+
+      sightWords: [],
       urls: [],
       currentList: null,
       currentPage: 'home',
@@ -39,17 +45,10 @@ class App extends React.Component {
     this.handleAnswerSubmission = this.handleAnswerSubmission.bind(this);
   }
 
-  componentDidMount() {
-    fetch('/graphql', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({query: "{ default }"})
-    })
-      .then(r => r.json())
-      .then(data => console.log('data returned:', data));
+  async componentDidMount() {
+   await this.getCourseList();
+    // this.getWordLists('kindergarten');
+    // this.getWords('green');
   }
 
 
@@ -168,9 +167,39 @@ class App extends React.Component {
     }
   }
 
-  // getCourseList() {
-
+  // async getCourseList() {
+  //   const listOfCourses = await courses();
+  //   console.log('courses', listOfCourses);
+  //   this.setState(() => {
+  //     return {'listOfCourses': listOfCourses}
+  //   }, () => {
+  //     console.log('listOfCourses', this.state.listOfCourses);
+  //   });
   // }
+
+  // async getWordLists(course) {
+  //   // const wordList = await wordLists(course);
+  //   // console.log('wordList', wordList);
+  //   // this.setState(() => {
+  //   //   return {'listOfCourses': wordList}
+  //   // }, () => {
+  //   //   console.log('wordLists', this.state.wordLists);
+  //   // });
+  // }
+
+  // async getWords(wordList) {
+  //   const wordsInCurrentList = await words(wordList);
+  //   console.log('wordsInCurrentList', wordsInCurrentList);
+  //   this.setState(() => {
+  //     return {
+  //       'words': wordsInCurrentList.words,
+  //       'urls': wordsInCurrentList.urls
+  //     }
+  //   }, () => {
+  //     console.log('words:', this.state.words, 'urls:', this.state.urls);
+  //   });
+  // }
+
 
   pageSelector() {
     // const {currentList} = this.state;

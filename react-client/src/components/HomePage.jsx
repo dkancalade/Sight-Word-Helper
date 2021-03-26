@@ -1,5 +1,6 @@
 import React from 'react';
-const HomePage = ({handleClick}) => (
+
+const HomePage = ({ handleClick }) => (
 <div>
   <h1>Welcome to Sight Words Helper</h1>
   <table id='menu'>

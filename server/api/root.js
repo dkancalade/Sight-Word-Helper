@@ -7,7 +7,6 @@ const connection = mysql.createConnection({
   user     : `${database.login}`,
   password : `${database.password}`,
   database : 'SightWords'
-
 });
 
 connection.connect();

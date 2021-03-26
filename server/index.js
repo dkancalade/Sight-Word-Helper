@@ -1,10 +1,10 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const { graphqlHTTP } = require('express-graphql');
+// const { graphqlHTTP } = require('express-graphql');
 // const items = require('../database-mysql');
-const root = require('./api/root.js');
-const myGraphQLSchema = require('./api/schema.js');
+// const root = require('./api/root.js');
+// const myGraphQLSchema = require('./api/schema.js');
 
 const app = express();
 
@@ -13,13 +13,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../react-client/dist')));
-app.use('/graphql', graphqlHTTP(
-  {
-    schema: myGraphQLSchema,
-    rootValue: root,
-    graphiql: true
-  },
-));
+// app.use('/graphql', graphqlHTTP(
+//   {
+//     schema: myGraphQLSchema,
+//     rootValue: root,
+//     graphiql: true
+//   },
+// ));
 
 // app.get('/', (req, res) => {
 

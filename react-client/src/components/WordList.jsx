@@ -2,8 +2,8 @@ import React from 'react';
 import WordDisplay from './WordDisplay.jsx';
 
 const WordList = (props) => {
-  const createHead = (props) => {
-    var sightWords = props.sightWords;
+  const createHead = () => {
+    const { sightWords } = props;
       if (props.lastWord && props.sightWords.length) {
         return (
           <div>
@@ -12,7 +12,7 @@ const WordList = (props) => {
             <p>Your stats are: {`${props.stats[0]}/${props.stats[1]}`}</p>
           </div>
         );
-      } else {
+      }
         if (props.sightWords.length === 0) {
           return (
             <div>
@@ -28,15 +28,15 @@ const WordList = (props) => {
                 Restart</button>
             </div>
           );
-        } else {
+        }
           return (
             <div>
               <h4> Current List: {props.currentList} </h4>
               <p>There are { props.sightWords.length } words to practice.</p>
             </div>
           );
-        }
-      }
+
+
   };
 
 return (
