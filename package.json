@@ -15,7 +15,7 @@
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.3.0",
     "babel-preset-react": "^6.23.0",
     "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -29,8 +29,8 @@
     "minimist": ">=0.2.1",
     "nodemon": "^2.0.6",
     "prettier": "2.1.2",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
     "bluebird": "^3.7.2",
